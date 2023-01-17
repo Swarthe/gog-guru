@@ -10,22 +10,24 @@
 #   AND Games.id = GameLanguages.game_id
 #   AND GameLanguages.language_id = Languages.id;
 #
-# To select languages supports by the game named "140".
+# To select languages supported by the game named "140".
+
+# TODO: docstrings for all funcs
 
 import requests
 import sqlite3 as sql
 
-ID_LIST_PATH = "data/game-id-list.txt"
-DB_PATH = "data/games.db"
+ID_LIST_PATH = 'data/db/game-id-list.txt'
+DB_PATH = 'data/db/games.db'
 
 # Maximum number of IDs in a single API request, according to GOG docs.
 REQ_ID_COUNT = 50
 
-API_URL = "https://api.gog.com/products"
+API_URL = 'https://api.gog.com/products'
 
 # Operating systems supported by games.
 SYSTEMS = ["Windows", "Linux", "macOS"]
-# Languages that we care about
+# Languages that we care about.
 LANGUAGES = ["Anglais", "Français"]
 
 def get_ids() -> list[str]:
@@ -72,13 +74,15 @@ def create_db() -> sql.Connection:
     with sql.connect(DB_PATH) as db:
         cur = db.cursor()
 
+        # TODO: add fields (tags, price)
+        # TODO: maybe voting and commenting functionality for users
         cur.executescript("""
             CREATE TABLE Games (
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 release_year TEXT,
                 buy_url TEXT,
-                image_url TEXT
+                logo_url TEXT
             );
 
             CREATE TABLE Systems (
@@ -126,6 +130,7 @@ def create_db() -> sql.Connection:
 
         return db
 
+# TODO: find way to get game tags / categories
 def populate_db(db: sql.Connection, data: list[str]):
     def populate_lang(cur: sql.Cursor, game_data: dict):
         langs = []
@@ -162,11 +167,11 @@ def populate_db(db: sql.Connection, data: list[str]):
     cur = db.cursor()
 
     for d in data:
-        # Some games don't have a release date
+        # Some games don't have a release date.
         if d['release_date'] is not None:
             rel_date = d['release_date'][:4]
         else:
-            rel_date = "not yet released"
+            rel_date = "unknown"
 
         cur.execute(f"""
             INSERT INTO Games (
@@ -174,7 +179,7 @@ def populate_db(db: sql.Connection, data: list[str]):
                 name,
                 release_year,
                 buy_url,
-                image_url
+                logo_url
             ) VALUES (
                 {d['id']},
                 "{d['title']}",
@@ -187,7 +192,29 @@ def populate_db(db: sql.Connection, data: list[str]):
         populate_lang(cur, d)
         populate_sys(cur, d)
 
+# XXX
+def test():
+    ids = get_ids()
+    data = []
+
+    for i in ids[:1]:
+        # Get info for a groups of games.
+        resps = requests.get(
+            url=API_URL,
+            params={ 'ids': i }
+        ).json()
+
+        # Flatten the response.
+        for r in resps:
+            data.append(r)
+
+    print(data[15])
+
+
 def main():
+    test()
+    return 0
+
     ids = get_ids()
 
     print(":: Querying GOG API...")
