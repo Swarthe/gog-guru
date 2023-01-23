@@ -17,8 +17,8 @@
 import requests
 import sqlite3 as sql
 
-ID_LIST_PATH = 'data/db/game-id-list.txt'
-DB_PATH = 'data/db/games.db'
+ID_LIST_PATH = 'data/game/id-list.txt'
+DB_PATH = 'data/game/games.db'
 
 # Maximum number of IDs in a single API request, according to GOG docs.
 REQ_ID_COUNT = 50
@@ -185,36 +185,15 @@ def populate_db(db: sql.Connection, data: list[str]):
                 "{d['title']}",
                 "{rel_date}",
                 "{d['purchase_link']}",
-                "{d['images']['logo2x'][2:]}"
+                "{'https://' + d['images']['logo2x'][2:]}"
             )
         """)
 
         populate_lang(cur, d)
         populate_sys(cur, d)
 
-# XXX
-def test():
-    ids = get_ids()
-    data = []
-
-    for i in ids[:1]:
-        # Get info for a groups of games.
-        resps = requests.get(
-            url=API_URL,
-            params={ 'ids': i }
-        ).json()
-
-        # Flatten the response.
-        for r in resps:
-            data.append(r)
-
-    print(data[15])
-
 
 def main():
-    test()
-    return 0
-
     ids = get_ids()
 
     print(":: Querying GOG API...")
