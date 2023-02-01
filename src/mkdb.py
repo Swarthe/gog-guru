@@ -81,8 +81,12 @@ def create_db() -> sql.Connection:
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 release_year TEXT,
+                is_released INTEGER,
                 buy_url TEXT,
-                logo_url TEXT
+                help_url TEXT,
+                forum_url TEXT,
+                logo_url TEXT,
+                bg_url TEXT
             );
 
             CREATE TABLE Systems (
@@ -170,22 +174,22 @@ def populate_db(db: sql.Connection, data: list[str]):
         # Some games don't have a release date.
         if d['release_date'] is not None:
             rel_date = d['release_date'][:4]
+        elif d['in_development']['until'] is not None:
+            rel_date = d['in_development']['until'][:4]
         else:
             rel_date = "unknown"
 
         cur.execute(f"""
-            INSERT INTO Games (
-                id,
-                name,
-                release_year,
-                buy_url,
-                logo_url
-            ) VALUES (
+            INSERT INTO Games VALUES (
                 {d['id']},
                 "{d['title']}",
                 "{rel_date}",
+                "{int(d['in_development']['active'])}",
                 "{d['purchase_link']}",
-                "{'https://' + d['images']['logo2x'][2:]}"
+                "{d['links']['support']}",
+                "{d['links']['forum']}",
+                "{'https://' + d['images']['logo2x'][2:]}",
+                "{'https://' + d['images']['background'][2:]}"
             )
         """)
 
@@ -196,11 +200,12 @@ def populate_db(db: sql.Connection, data: list[str]):
 def main():
     ids = get_ids()
 
-    print(":: Querying GOG API...")
-    data = get_data(ids)
-
     print(":: Creating database...")
     with create_db() as db:
+        print(":: Querying GOG API...")
+        data = get_data(ids)
+
+        print(":: Population database...")
         populate_db(db, data)
 
     print(":: Done!")

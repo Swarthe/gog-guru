@@ -26,7 +26,7 @@ def main():
             return flask.render_template('main-err.html')
         else:
             game_data = games.get_fuzzy(game_search)
-            print(game_data)
+            dbg_dict(game_data)     # DEBUG
 
             if game_data is None:
                 return flask.render_template(
@@ -39,6 +39,10 @@ def main():
                     game_search = game_search,
                     game_data = game_data
                 )
+
+def dbg_dict(d):
+    for v in d:
+        print(f"k: {v}")
 
 if __name__ == '__main__':
     app.run()
