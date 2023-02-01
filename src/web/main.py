@@ -7,40 +7,38 @@ import flask
 from flask import request
 from flask import Flask
 
-TEMPLATE_PATH = 'data/web'
-
-app = Flask(__name__, template_folder=TEMPLATE_PATH)
+app = Flask(
+    __name__,
+    template_folder='data/templates',
+    static_folder='data/static'
+)
 
 @app.route('/', methods=['POST', 'GET'])
 def main():
     games = game.Data()
 
-    if request.method == 'POST':
-        req = user_request()
-
-        if req is None:
-            return flask.render_template('req-again.html')
-        else:
-            name = req['game']
-
-            return flask.render_template(
-                'res.html',
-                logo_url = games.get(name)['logo_url'],
-                **req
-            )
+    if request.method == 'GET':
+        return flask.render_template('main.html')
     else:
-        return flask.render_template('req.html')
+        game_search = request.form["game"]
 
-@app.route('/')
-def user_request() -> dict:
-    req = request.form
+        if len(game_search) == 0:
+            return flask.render_template('main-err.html')
+        else:
+            game_data = games.get_fuzzy(game_search)
+            print(game_data)
 
-    for v in req.values():
-        if len(v) == 0:
-            return None
-
-    return req
-
+            if game_data is None:
+                return flask.render_template(
+                    "game-not-found.html",
+                    game_search = game_search
+                )
+            else:
+                return flask.render_template(
+                    'game-result.html',
+                    game_search = game_search,
+                    game_data = game_data
+                )
 
 if __name__ == '__main__':
     app.run()

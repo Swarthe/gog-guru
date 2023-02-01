@@ -1,0 +1,147 @@
+/* CSS variables */
+:root {
+  --color-bg: #080808;
+  --color-text-main: #ffffff;
+  --color-primary: #ffffff;
+  --wrapper-height: 87vh;
+  --image-max-width: 300px;
+  --image-margin: 3rem;
+  --font-family: TheGoodMonolith;
+  --font-family-header: TheGoodMonolith;
+}
+
+/* Import fonts */
+@import url('https://fonts.cdnfonts.com/css/thegoodmonolith');
+@import url('https://fonts.cdnfonts.com/css/dec-terminal-modern');
+
+/* Our remix on glitch button */
+.btn--remix {
+  font-family: 'TheGoodMonolith', sans-serif;
+  padding: 0.5rem 3rem;
+  font-size: 1.1rem;
+  line-height: 1rem;
+  font-weight: 500;
+  height: 5%;
+  cursor: pointer;
+  background-image: url('https://cdn.glitch.global/82b06e6e-8773-4db0-89f3-4233dff40e57/emilover.png?v=1673942503114');
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 0px solid #000000;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #ffffff;
+  white-space: nowrap;
+  margin-left:;
+}
+
+.btn--remix:hover {
+  background-color: #4c4c4c;
+}
+
+/* Navigation grid */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem auto 0;
+  padding: 1rem 0 0.75rem 0;
+  width: 100%;
+  flex-wrap: wrap;
+  border-top: 0px solid #ffffff;
+}
+
+.footer a:not(.btn--remix):link,
+a:not(.btn--remix):visited {
+  font-family: 'TheGoodMonolith', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.1rem;
+  color: #ffffff;
+  text-decoration: none;
+  border-style: none;
+}
+
+}
+.footer .links {
+  padding: 0.5rem 1rem 1.5rem;
+  white-space: nowrap;
+}
+
+.divider {
+  padding: 0 1rem;
+}
+/******************************************************************************
+END Glitch hello-app default styles
+******************************************************************************/
+
+body {
+  font-family: 'TheGoodMonolith', sans-serif;
+  background-color: var(--color-bg);
+}
+
+/* Page structure */
+.wrapper {
+  min-height: var(--wrapper-height);
+  display: grid;
+  place-items: center;
+  margin: 0 1rem;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Very light scaling for our illustration */
+.title {
+  color: #FFFFFF;
+  font-family: 'DEC Terminal Modern', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 105%;
+  margin: 0;
+}
+
+/* Very light scaling for our illustration */
+.illustration {
+  max-width: 100%;
+  max-height: var(--image-max-width);
+  margin-top: var(--image-margin);
+}
+
+/* Instructions */
+.instructions {
+  margin: 1rem auto 0;
+}
+
+/* Button - Add it from the README instructions */
+
+/* Subheading */
+p {
+  color: #FFFFFF;
+}
+
+inv{
+  color: #e50000;
+}
+
+h2 {
+  color: #FFFFFF;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Interactive image */
+.illustration:active {
+  transform: translateY(5px);
+}
+
+/* Button dip
+- Toggling this class on and off will move it down and up again - The button
+  transition property above determines the speed of the translate (500ms)
+*/
+.dipped {
+  transform: translateY(5px);
+}

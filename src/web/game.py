@@ -11,11 +11,37 @@ class Data:
             # Enable reading rows into dictionaries
             self.db.row_factory = sql.Row
 
-    # TODO
-    def get(self, name: str) -> dict:
+    def get(self, name: str):
+        '''
+        Returns a `dict` with data pertaining to `name`.
+
+        Returns `None` if `name` was not found.
+        '''
         # Use replacement pattern ('?') to avoid SQL injections.
-        # There should only be one row, as every game name is unique.
-        return self.db.execute('''
+        results = self.db.execute('''
             SELECT * FROM Games
             WHERE name = ?
-        ''', (name,)).fetchall()[0]
+        ''', (name,)).fetchall()
+
+        return first_of(results)
+
+    def get_fuzzy(self, name_pat: str):
+        '''
+        Returns a `dict` with data pertaining to something like `name`.
+
+        Returns `None` if `name` was not matched.
+        '''
+        # Use replacement pattern ('?') to avoid SQL injections.
+        results = self.db.execute('''
+            SELECT * FROM Games
+            WHERE name LIKE ?
+        ''', ('%' + name_pat + '%',)).fetchall()
+        print(len(results))
+
+        return first_of(results)
+
+def first_of(l: list):
+    '''
+    Returns first element of `l` or `None`.
+    '''
+    return l[0] if len(l) > 0 else None
