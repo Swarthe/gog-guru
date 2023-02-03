@@ -12,8 +12,6 @@
 #
 # To select languages supported by the game named "140".
 
-# TODO: docstrings for all funcs
-
 import requests
 import sqlite3 as sql
 
@@ -71,6 +69,9 @@ def get_data(ids: list[str]) -> list[dict]:
     return result
 
 def create_db() -> sql.Connection:
+    '''
+    Create and initialise an SQLite database.
+    '''
     with sql.connect(DB_PATH) as db:
         cur = db.cursor()
 
@@ -136,6 +137,9 @@ def create_db() -> sql.Connection:
 
 # TODO: find way to get game tags / categories
 def populate_db(db: sql.Connection, data: list[str]):
+    '''
+    Populate an existing SQLite database.
+    '''
     def populate_lang(cur: sql.Cursor, game_data: dict):
         langs = []
 

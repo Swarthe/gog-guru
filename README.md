@@ -1,6 +1,8 @@
 # GOG Guru
 
-- Enter budget and games/tags you like.
+- Run `python run.py`
+- Enter words pertaining to games you might like (e.g. space, rogue, zombie).
+- Select constraints (language and OS)
 - See games you might like
 
 ## Implementation
