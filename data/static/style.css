@@ -1,9 +1,9 @@
 /* CSS variables */
 :root {
-  --color-bg: #080808;
+  --color-bg: #000000;
   --color-text-main: #ffffff;
   --color-primary: #ffffff;
-  --wrapper-height: 87vh;
+  --wrapper-height: 12vh;
   --image-max-width: 300px;
   --image-margin: 3rem;
   --font-family: TheGoodMonolith;
@@ -23,7 +23,7 @@
   font-weight: 500;
   height: 5%;
   cursor: pointer;
-  background-image: url('https://cdn.glitch.global/82b06e6e-8773-4db0-89f3-4233dff40e57/emilover.png?v=1673942503114');
+  background-image: url('https://cdn.glitch.global/82b06e6e-8773-4db0-89f3-4233dff40e57/New%20Piskel.png?v=1675447933612');
   background-repeat: no-repeat;
   background-size: contain;
   border: 0px solid #000000;
@@ -31,16 +31,20 @@
   border-radius: 4px;
   text-decoration: none;
   color: #ffffff;
+  background-color: #484848;
   white-space: nowrap;
   margin-left:;
 }
 
 .btn--remix:hover {
-  background-color: #4c4c4c;
+  background-color: #6d6d6d;
 }
 
 /* Navigation grid */
 .footer {
+  position:fixed;
+  bottom:0;left:0;right:0;
+  height:30px;
   display: flex;
   justify-content: flex-end;
   margin: 1rem auto 0;
@@ -49,30 +53,6 @@
   flex-wrap: wrap;
   border-top: 0px solid #ffffff;
 }
-
-.footer a:not(.btn--remix):link,
-a:not(.btn--remix):visited {
-  font-family: 'TheGoodMonolith', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.1rem;
-  color: #ffffff;
-  text-decoration: none;
-  border-style: none;
-}
-
-}
-.footer .links {
-  padding: 0.5rem 1rem 1.5rem;
-  white-space: nowrap;
-}
-
-.divider {
-  padding: 0 1rem;
-}
-/******************************************************************************
-END Glitch hello-app default styles
-******************************************************************************/
 
 body {
   font-family: 'TheGoodMonolith', sans-serif;
@@ -99,9 +79,77 @@ body {
   font-family: 'DEC Terminal Modern', sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 32px;
   line-height: 105%;
   margin: 0;
+}
+
+.dropbtn {
+  font-family: "TheGoodMonolith", sans-serif;
+  background-color: #0f0f0f0f;
+  color: white;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #4c4c4c;
+}
+
+.btn--remix-small {
+  font-family: "TheGoodMonolith", sans-serif;
+  padding: 0.25rem 1rem;
+  font-size: 0.8rem;
+  line-height: 0.5rem;
+  font-weight: 200;
+  height: 5%;
+  cursor: pointer;
+  background-size: contain;
+  border: 0px solid #000000;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #000000;
+  background: rgba(0, 0, 0,0);
+  white-space: nowrap;
+
+}
+
+.btn--remix-small:hover {
+  background-color: #cccccc;
 }
 
 /* Very light scaling for our illustration */
@@ -116,32 +164,68 @@ body {
   margin: 1rem auto 0;
 }
 
-/* Button - Add it from the README instructions */
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-size: 16px;
+  padding: 16px 32px;
+}
 
 /* Subheading */
+
+img {
+   max-width: 70%;
+   max-height: 70%;
+}
 p {
+  font-style: normal;
+  font-size: 18px;
   color: #FFFFFF;
 }
 
-inv{
-  color: #e50000;
+inv {
+  font-weight: bold;
+  color: #e00000;
 }
+
+h1 {
+  font-size: 20px;
+}
+
 
 h2 {
   color: #FFFFFF;
   white-space: nowrap;
   text-align: center;
-}
-
-/* Interactive image */
-.illustration:active {
-  transform: translateY(5px);
-}
-
-/* Button dip
-- Toggling this class on and off will move it down and up again - The button
-  transition property above determines the speed of the translate (500ms)
-*/
-.dipped {
-  transform: translateY(5px);
 }

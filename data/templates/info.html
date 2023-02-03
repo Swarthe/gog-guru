@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/82b06e6e-8773-4db0-89f3-4233dff40e57/Goggurumin.png?v=16751979"
+    />
+    <link
+      href="https://fonts.cdnfonts.com/css/thegoodmonolith"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.cdnfonts.com/css/dec-terminal-modern"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="content" role="main">
+        <h1 class="title">
+          <img
+            src="https://cdn.glitch.global/82b06e6e-8773-4db0-89f3-4233dff40e57/GOGguru%20logo.png?v=1673432448488"
+          />
+          find the game of your life!
+        </h1>
+
+        <div class="instructions">
+          <h2>Hello.</h2>
+          <p>
+           Welcome to  <strong>GOGguru</strong> . Here you can find your next
+           favorite video game by simply entering your search criteria; enjoy!
+          </p>
+
+          <center>
+            <form method="post" action="{{ url_for('eval_search') }}">
+              <h2>game: <input name="search" />
+                    <div class="dropdown">
+                    <button type="button" class="dropbtn">Language</button>
+                    <div class="dropdown-content">
+                      <button class="btn--remix-small" type="button"
+                          name="lang" value="English">English</button><br>
+                      <button class="btn--remix-small" type="button"
+                          name="lang" value="Français">Français</button>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <button type="button" class="dropbtn">OS</button>
+                    <div class="dropdown-content">
+                      <button class="btn--remix-small" type="button"
+                          name="os" value="Windows">Windows</button><br>
+                      <button class="btn--remix-small" type="button"
+                          name="os" value="Linux">Linux</button><br>
+                      <button class="btn--remix-small"type="button"
+                          name="os" value="macOS">macOS</button>
+                    </div>
+                  </div>
+                </h2>
+            <button
+              type="submit"
+              class="btn--remix"
+            >
+              <b>Search</b>
+            </button>
+            </form>
+          </center>
+        </div>
+      </div>
+    </div>
+
+      <p>
+    <h2>{{data['name']}}</h2>
+        <div class="instructions">
+    <img src="{{data['bg_url']}}"><br>
+    <br>
+      <a href="{{data['help_url']}}">Support</a><br>
+      <a href="{{data['forum_url']}}">Forum</a><br>
+      <a href="{{data['buy_url']}}">Purchase</a><br><br>
+
+      <inv>
+      released in <strong>{{data['release_year']}}</strong>
+      </inv>
+        </p>
+        </div>
+
+    <footer class="footer">
+
+      <p>made by swarthe and joeP</p>
+    </footer>
+  </body>
+</html>

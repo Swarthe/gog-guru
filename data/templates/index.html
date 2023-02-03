@@ -38,13 +38,32 @@
           </p>
 
           <center>
-            <form method="post">
-              <h2>game: <input name="game" /></h2>
-            <br />
+            <form method="post" action="{{ url_for('eval_search') }}">
+              <h2>game: <input name="search" />
+                <div class="dropdown">
+                    <button type="button" class="dropbtn">Language</button>
+                    <div class="dropdown-content">
+                      <button class="btn--remix-small" type="button"
+                          name="lang" value="English">English</button><br>
+                      <button class="btn--remix-small" type="button"
+                          name="lang" value="Français">Français</button>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <button type="button" class="dropbtn">OS</button>
+                    <div class="dropdown-content">
+                      <button class="btn--remix-small" type="button"
+                          name="os" value="Windows">Windows</button><br>
+                      <button class="btn--remix-small" type="button"
+                          name="os" value="Linux">Linux</button><br>
+                      <button class="btn--remix-small"type="button"
+                          name="os" value="macOS">macOS</button>
+                    </div>
+                  </div>
+              </h2>
             <button
               type="submit"
               class="btn--remix"
-              target="_top"
             >
               <b>Search</b>
             </button>

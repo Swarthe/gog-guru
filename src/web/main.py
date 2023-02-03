@@ -13,38 +13,49 @@ app = Flask(
     static_folder='data/static'
 )
 
+games = game.Data()
+
 @app.route('/', methods=['POST', 'GET'])
 def main():
-    games = game.Data()
+    return flask.render_template('index.html')
 
-    if request.method == 'GET':
-        return flask.render_template('main.html')
+@app.route('/eval_search', methods=['POST', 'GET'])
+def eval_search():
+    '''
+    `data` could be None
+    '''
+    search = request.form['search']
+    data = games.get_fuzzy(search)
+
+    if not search or not data:
+        return flask.render_template(
+            'invalid-search.html',
+            search = search,
+            data = data
+        )
     else:
-        game_search = request.form["game"]
+        if lang := request.form.get('lang'):
+            data = filter(data,
+                lambda d: games.supports_lang(d['id'], lang)
+            )
+        if os := request.form.get('os'):
+            data = filter(data,
+                lambda d: games.supports_os(d['id'], os)
+            )
 
-        if len(game_search) == 0:
-            return flask.render_template('main-err.html')
-        else:
-            game_data = games.get_fuzzy(game_search)
-            dbg_dict(game_data)     # DEBUG
+        print(lang, os)
+        return flask.render_template(
+            'result.html',
+            search = search,
+            data = data
+        )
 
-            if game_data is None:
-                return flask.render_template(
-                    "game-not-found.html",
-                    game_search = game_search
-                )
-            else:
-                return flask.render_template(
-                    'game-result.html',
-                    game_search = game_search,
-                    game_data = game_data
-                )
-
-def dbg_dict(d):
-    for v in d:
-        print(f"k: {v}")
+@app.route('/game_info', methods=['POST', 'GET'])
+def game_info():
+    return flask.render_template(
+        'info.html',
+        data = games.get_by_id(int(request.form['id']))
+    )
 
 if __name__ == '__main__':
     app.run()
-
-main()
