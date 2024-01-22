@@ -26,3 +26,8 @@
 
 TODO: refresh db and schema image
 TODO: make public on github ?
+
+## License
+
+This library is free software and subject to the MIT license. See `LICENSE.txt`
+for more information.

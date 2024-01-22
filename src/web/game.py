@@ -39,12 +39,12 @@ class Data:
 
         return results
 
-    def supports_lang(gameid: int, lang_name: str) -> bool:
+    def supports_lang(self, gameid: int, lang_name: str) -> bool:
         '''
         accepts 'Anglais', 'Français'
         '''
         results = self.db.execute('''
-            FROM Games, GameLanguages, Languages
+            SELECT * FROM Games, GameLanguages, Languages
             WHERE Games.id = ?
               AND Games.id = GameLanguages.game_id
               AND GameLanguages.language_id = Languages.id
@@ -53,12 +53,12 @@ class Data:
 
         return len(results) > 0
 
-    def supports_os(gameid: int, os_name: str) -> bool:
+    def supports_os(self, gameid: int, os_name: str) -> bool:
         '''
         accepts 'Windows', 'Linux', 'macOS'
         '''
         results = self.db.execute('''
-            FROM Games, GameSystems, Systems
+            SELECT * FROM Games, GameSystems, Systems
             WHERE Games.id = ?
               AND Games.id = GameSystems.game_id
               AND GameSystems.system_id = Systems.id
